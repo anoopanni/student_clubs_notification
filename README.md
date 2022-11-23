@@ -1,2 +1,2 @@
 # student_clubs_notification
-Student clubs notification service for final project distributed systems class: COEN 317
+Student clubs notification service for final project for distributed systems class: COEN 317
