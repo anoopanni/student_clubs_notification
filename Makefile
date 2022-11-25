@@ -19,3 +19,6 @@ logs:
 exec:
 	docker-compose exec flask sh
 
+# docker prune: used to clear all the stale containers, images, volumes, networks
+prune:
+	docker system prune -a
