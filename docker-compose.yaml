@@ -14,7 +14,7 @@ services:
     #   - ./:/app
     # End block for local development
     ports:
-      - 5001:5001
+      - 8050:8050
     environment:
       - DEBUG_FLASK=True
       - DEBUG_LOGGING=True
