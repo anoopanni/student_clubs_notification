@@ -1,0 +1,22 @@
+version: '1.0.0'
+
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flask_local
+    # Start block for local development
+    #command: python app.py
+    #command: "/bin/bash"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    # End block for local development
+    ports:
+      - 5001:5001
+    environment:
+      - DEBUG_FLASK=True
+      - DEBUG_LOGGING=True
+      - LOGGING_LEVEL=DEBUG
+      - FLASK_RUN_PORT=5001
