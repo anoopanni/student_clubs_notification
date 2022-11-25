@@ -17,5 +17,5 @@ logs:
 
 # docker exec
 exec:
-	docker-compose exec flask bash
+	docker-compose exec flask sh
 
