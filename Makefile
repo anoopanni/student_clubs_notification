@@ -10,11 +10,12 @@ build:
 down:
 	docker-compose down --remove-orphans
 
+# docker logs
+logs:
+	docker-compose logs -f
 
 
-# build:  
-# 	docker build -t docker_app .
-
-# run:
-# 	docker run -p 6000:5000 -d $(argument)
+# docker exec
+exec:
+	docker-compose exec flask bash
 
