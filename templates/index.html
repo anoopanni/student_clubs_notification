@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Flask Docker</title>
-</head>
-<body>
-    <h1>This is a Flask App containerised with Docker</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="./index.js"></script>
+    <title>Pub/Sub</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="left">
+        <div class="title">
+          <h1 class="titleText">Club-1</h1>
+          <hr style="color: whitesmoke" />
+        </div>
+        <div class="buttonsDiv">
+          <button onclick="clickButton()" class="button button1">
+            Subscribe to Sports Club
+          </button>
+          <button class="button button2">Unsubscribe Sports Club</button>
+        </div>
+      </div>
+      <div class="right">
+        <div class="title">
+          <h1 class="titleText">Club-2</h1>
+          <hr style="color: whitesmoke" />
+        </div>
+        <div class="buttonsDiv">
+          <button class="button button3">Subscribe to Technical Club</button>
+          <button class="button button4">Unsubscribe Technical Club</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
