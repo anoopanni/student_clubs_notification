@@ -1,37 +1,284 @@
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="./index.js"></script>
-    <title>Pub/Sub</title>
-  </head>
-  <body>
-    <div class="wrap">
-      <div class="left">
-        <div class="title">
-          <h1 class="titleText">Club-1</h1>
-          <hr style="color: whitesmoke" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        html,body {
+            padding:0;
+            margin:0;
+            height:100%;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .buttonload {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 1px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .allSport {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 900px;
+        }
+        .singleSport {
+            padding: 30px 10px;
+            border: 1px solid grey;
+            text-align: center;
+            margin: 5px;
+            width: 150px;
+            flex-basis: 150px;
+            flex-grow: 1;
+        }
+        #passcount {
+            height: 40%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        #shootcount {
+            height: 40%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding-top: 2%;
+        }
+
+        .outside-card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .inside-card {
+            display: flex;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+        
+        .container1 {
+            padding: 2px 16px;
+            width: 50%;
+        }
+
+        .container2 {
+            padding: 2px 16px;
+            width: 50%;
+        }
+
+        .game-title {
+            padding-top: 2%;
+            padding-left: 1.2%;
+        }
+
+
+        .topShooter {
+            width: 28%;
+            height: auto;
+            float: left;
+        }
+
+        .topPasser {
+            width: 28%;
+            height: auto;
+            margin-left: 30%;
+        }
+
+        .star-details {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="news-story"></div> -->
+    <div class="allSport">
+        <div class="singleSport">
+            <button id="quizclubButtonSub">Subscribe quizclub</button>
+            <button id="quizclubButtonUnSub">UnSubscribe quizclub</button>
+            <div id="quizclubHighlights">
+            </div>
         </div>
-        <div class="buttonsDiv">
-          <button onclick="clickButton()" class="button button1">
-            Subscribe to Sports Club
-          </button>
-          <button class="button button2">Unsubscribe Sports Club</button>
+        <div class="singleSport">
+            <button id="musicclubButtonSub">Subscribe musicclub</button>
+            <button id="musicclubButtonUnSub">UnSubscribe musicclub</button>
+            <div id="musicclubHighlights">
+            </div>
         </div>
-      </div>
-      <div class="right">
-        <div class="title">
-          <h1 class="titleText">Club-2</h1>
-          <hr style="color: whitesmoke" />
-        </div>
-        <div class="buttonsDiv">
-          <button class="button button3">Subscribe to Technical Club</button>
-          <button class="button button4">Unsubscribe Technical Club</button>
-        </div>
-      </div>
-    </div>
-  </body>
+     </div>     
+</body>
+<script>
+    let socBtn;
+    let musicclubBtn;
+    let socInterval;
+    let musicclubInterval;
+    document.getElementById("quizclubButtonSub").onclick = function(e){
+        socBtn = document.getElementById("quizclubButtonSub");
+        const soc = '<button class="buttonload"><i class="fa fa-spinner fa-spin"></i>Subscribing</button>'
+        socBtn.innerHTML = soc;
+        subscribe("quizclub")
+    }
+    document.getElementById("musicclubButtonSub").onclick = function(e){
+        musicclubBtn = document.getElementById("musicclubButtonSub");
+        const btn = '<button class="buttonload"><i class="fa fa-spinner fa-spin"></i>Subscribing</button>'
+        musicclubBtn.innerHTML = btn;
+        subscribe("musicclub")
+    }
+    document.getElementById("musicclubButtonUnSub").onclick = function(e){
+        unsubscribe("musicclub")
+    }
+    document.getElementById("quizclubButtonUnSub").onclick = function(e){
+        unsubscribe("quizclub")
+    }
+
+    async function unsubscribe(sport) {
+        console.log(sport)
+        axios.get('http://localhost:8000/unsubscribe', {
+            params: {
+                listner: 'kaustubh',
+                channel: sport
+            }
+        });
+        if(sport === "quizclub") {
+            clearInterval(socInterval);
+        } else if (sport === "musicclub"){
+            clearInterval(musicclubInterval);
+        }
+    }
+
+    async function subscribe(sport) {
+        console.log(sport)
+        axios.get('http://localhost:8000/subscribe', {
+            params: {
+                listner: 'kaustubh',
+                channel: sport
+            }
+        });
+        if(sport === "quizclub") {
+            socInterval = setInterval(() => callAPIquizclub(), 2000);
+        } else if (sport === "musicclub"){
+            musicclubInterval = setInterval(() => callAPImusicclub(), 2000);
+        }
+    }
+
+    async function callAPImusicclub() {
+        axios.get('http://localhost:8000/getData', {
+            params: {
+            listner: 'kaustubh'
+            }
+        }).then(response =>{
+                var musicclub = document.getElementById("musicclubHighlights");
+                var musicclubHighlights = response.data.filter(function (element) {
+                    return element.channel === "musicclub"
+                });
+                if(musicclubHighlights.length > 0) {
+                    musicclubBtn.remove();
+                    musicclub.innerHTML = '';
+                }
+                console.log(musicclubHighlights)
+                let bSoc = '';
+                for(var i = 0; i < musicclubHighlights.length; i++) {
+                    let highlight = JSON.parse(String(musicclubHighlights[i].data))
+                    bSoc += `<div class="outside-card">
+                                <h4 class="game-title"><b>Game ID: `+ highlight.id +` </b></h4>
+                                <div class="inside-card">
+                                <div class="container1">
+                                    <p>Game Overview</p>
+                                    <p>`+ highlight.team1 + ` vs ` + highlight.team2 + ` </p>
+                                </div>
+                                <div class="container2">
+                                    <div class=star-details>
+                                        <div class="topShooter">
+                                            <img src="musicclub-player-svgrepo-com.svg" alt="Avatar" style="width:100%">                        
+                                            <div class="container">
+                                            <h4><b></b></h4>
+                                            <p>Score: `+ highlight.score1 + `</p>
+                                            <p>Team: `+ highlight.team1 + `</p>
+                                            </div>
+                                        </div>
+                                        <div class="topPasser">
+                                            <img src="musicclub-player-svgrepo-com.svg" alt="Avatar" style="width:100%">                        
+                                            <div class="container">
+                                            <h4><b></b></h4>
+                                            <p>Score: `+ highlight.score2 + ` </p>
+                                            <p>Team: `+ highlight.team2 + `</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>`;
+                    musicclub.innerHTML = bSoc; 
+                }
+            })
+        }
+
+    async function callAPIquizclub() {
+        axios.get('http://localhost:8000/getData', {
+            params: {
+            listner: 'kaustubh'
+            }
+        }).then(response =>{
+                var quizclub = document.getElementById("quizclubHighlights");
+                var quizclubHighlights = response.data.filter(function (element) {
+                    return element.channel === "quizclub"
+                });
+                if(quizclubHighlights.length > 0) {
+                    socBtn.remove();
+                    quizclub.innerHTML = '';
+                }
+                // console.log(quizclubHighlights)
+                let pSoc = '';
+                for(var i = 0; i < quizclubHighlights.length; i++) {
+                    let highlight = JSON.parse(String(quizclubHighlights[i].data))
+                    pSoc += `<div class="outside-card">
+                                <h4 class="game-title"><b>Game ID: `+ highlight.id +` </b></h4>
+                                <div class="inside-card">
+                                <div class="container1">
+                                    <p>Game Overview</p>
+                                    <p>`+ highlight.team1 + ` vs ` + highlight.team2 + ` </p>
+                                </div>
+                                <div class="container2">
+                                    <div class=star-details>
+                                        <div class="topShooter">
+                                            <img src="musicclub-player-svgrepo-com.svg" alt="Avatar" style="width:100%">                        
+                                            <div class="container">
+                                            <h4><b></b></h4>
+                                            <p>Score: `+ highlight.score1 + `</p>
+                                            <p>Team: `+ highlight.team1 + `</p>
+                                            </div>
+                                        </div>
+                                        <div class="topPasser">
+                                            <img src="musicclub-player-svgrepo-com.svg" alt="Avatar" style="width:100%">                        
+                                            <div class="container">
+                                            <h4><b></b></h4>
+                                            <p>Score: `+ highlight.score2 + ` </p>
+                                            <p>Team: `+ highlight.team2 + `</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>`;
+                    quizclub.innerHTML = pSoc;   
+                }
+            })
+        }
+</script>
 </html>
