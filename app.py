@@ -24,12 +24,13 @@ def subscribe():
         subscriber_id = int(request.args.get('subscriber_id'))
         topic = str(request.args.get('topic'))
         sub_obj = communicator.subscribe(topic)
-        if subscriber_id in subscriber_map and topic in subscriber_map[subscriber_id]:
-            return Response(status=400, response="subscriber is already subscribed to the topic") 
+        if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
+            return Response(status=400, response="Subscriber is already subscribed to the topic") 
         subscriber_map[subscriber_id][topic] = sub_obj
-        return Response(status=201, response="Subscribed to the topic {}".format(topic))
+        return Response(status=200, response="Subscribed to the topic {}".format(topic))
     except Exception as e:
         print("GET route /subscribe error: {}".format(e))
+        return Response(status=400)
 
 
 @app.route('/unsubscribe', methods=["GET"])
@@ -37,23 +38,30 @@ def unsubscribe():
     try:
         subscriber_id = int(request.args.get('subscriber_id'))
         topic = str(request.args.get('topic'))
-        if subscriber_id in subscriber_map and subscriber_map[subscriber_id][1] == topic:
-            return Response(status=400, response="subscriber is already subscribed to the topic") 
-        return Response(status=201)
+        if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
+            communicator.unsubscribe(topic, subscriber_map[subscriber_id][topic])
+            return Response(status=200, response="Successfully unsubscribed from the topic: {}".format(topic))
+        else:
+            return Response(status=400, response="Subscriber does not exist or haven't subscribed to: {}".format(topic))
     except Exception as e:
         print("GET route /unsubscribe error: {}".format(e))
+        return Response(status=400)
 
 @app.route('/get_all_messages', methods=["GET"])
 def get_all_messages():
     try:
         subscriber_id = int(request.args.get('subscriber_id'))
         topic = str(request.args.get('topic'))
-
+        data = {}
+        if subscriber_id in subscriber_map and topic in subscriber_map[subscriber_id]:
+            
+            data["result"] = 
 
         return Response(status_code=201)
 
     except Exception as e:
         print("GET route /get_all_messages error:".format(e))
+        return Response(status=400)
 
 
 if __name__ == "__main__":
