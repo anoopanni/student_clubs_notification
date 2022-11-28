@@ -40,10 +40,12 @@ def subscribe():
 @app.route('/unsubscribe', methods=["GET"])
 def unsubscribe():
     try:
-        subscriber_id = int(request.args.get('subscriber_id'))
-        topic = str(request.args.get('topic'))
+        subscriber_id = request.args.get('subscriber_id')
+        topic = request.args.get('topic')
         if not topic or not subscriber_id:
             return Response(status=400, response="Missing subscriber_id or topic")
+        subscriber_id = int(subscriber_id)
+        topic = str(topic)
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             communicator.unsubscribe(topic, subscriber_map[subscriber_id][topic])
             del subscriber_map[subscriber_id][topic]
@@ -61,13 +63,15 @@ def get_all_messages():
         topic = str(request.args.get('topic'))
         if not topic or not subscriber_id:
             return Response(status=400, response="Missing subscriber_id or topic")
+        subscriber_id = int(subscriber_id)
+        topic = str(topic)
         data = []
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             for message in subscriber_map[subscriber_id][topic].listen():
                 data.append(message)
-        return Response(status_code=200, response=json.dumps({"result":data}))
+        return Response(status=200, response=json.dumps({"result":data}))
     except Exception as e:
-        print("GET route /get_all_messages error:".format(e))
+        print("GET route /get_all_messages error: {}".format(e))
         return Response(status=400)
 
 
