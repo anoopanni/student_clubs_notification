@@ -1,2 +1,2 @@
 student_clubs_notification.code-workspace
-__pycache__/pubsub.cpython-38.pyc
+*.pyc
