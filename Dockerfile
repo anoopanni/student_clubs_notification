@@ -1,6 +1,11 @@
 # start by pulling the python image
 FROM python:3.8-alpine
 
+
+RUN apk add --no-cache git
+
+RUN apk add --update --no-cache openssh
+
 # copy the requirements file into the image
 COPY ./requirements.txt /app/requirements.txt
 
