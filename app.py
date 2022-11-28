@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, json
 from collections import defaultdict
 from pubsub import PubSub
 import os
@@ -48,21 +48,19 @@ def unsubscribe():
         print("GET route /unsubscribe error: {}".format(e))
         return Response(status=400)
 
-# @app.route('/get_all_messages', methods=["GET"])
-# def get_all_messages():
-#     try:
-#         subscriber_id = int(request.args.get('subscriber_id'))
-#         topic = str(request.args.get('topic'))
-#         data = {}
-#         if subscriber_id in subscriber_map and topic in subscriber_map[subscriber_id]:
-            
-#             data["result"] = 
-
-#         return Response(status_code=201)
-
-#     except Exception as e:
-#         print("GET route /get_all_messages error:".format(e))
-#         return Response(status=400)
+@app.route('/get_all_messages', methods=["GET"])
+def get_all_messages():
+    try:
+        subscriber_id = int(request.args.get('subscriber_id'))
+        topic = str(request.args.get('topic'))
+        data = {}
+        if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
+            for message in subscriber_map[subscriber_id][topic].listen():
+                data["result"].append(message)
+        return Response(status_code=201, response=json.dumps(data))
+    except Exception as e:
+        print("GET route /get_all_messages error:".format(e))
+        return Response(status=400)
 
 
 if __name__ == "__main__":
