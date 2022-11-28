@@ -42,6 +42,8 @@ def unsubscribe():
     try:
         subscriber_id = int(request.args.get('subscriber_id'))
         topic = str(request.args.get('topic'))
+        if not topic or not subscriber_id:
+            return Response(status=400, response="Missing subscriber_id or topic")
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             communicator.unsubscribe(topic, subscriber_map[subscriber_id][topic])
             del subscriber_map[subscriber_id][topic]
@@ -57,11 +59,13 @@ def get_all_messages():
     try:
         subscriber_id = int(request.args.get('subscriber_id'))
         topic = str(request.args.get('topic'))
-        data = {}
+        if not topic or not subscriber_id:
+            return Response(status=400, response="Missing subscriber_id or topic")
+        data = []
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             for message in subscriber_map[subscriber_id][topic].listen():
-                data["result"].append(message)
-        return Response(status_code=201, response=json.dumps(data))
+                data.append(message)
+        return Response(status_code=200, response=json.dumps({"result":data}))
     except Exception as e:
         print("GET route /get_all_messages error:".format(e))
         return Response(status=400)
