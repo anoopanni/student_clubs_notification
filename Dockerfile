@@ -2,7 +2,7 @@
 FROM python:3.8-alpine
 
 
-RUN apk add --no-cache git && apk add --update --no-cache openssh
+RUN apk add --update --no-cache openssh && apk add --no-cache git
 
 # copy the requirements file into the image
 COPY ./requirements.txt /app/requirements.txt
