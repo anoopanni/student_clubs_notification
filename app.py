@@ -25,12 +25,34 @@ def subscribe():
         if subscriber_id in subscriber_map and subscriber_map[subscriber_id][1] == topic:
             return Response(status=400, response="subscriber is already subscribed to the topic") 
         subscriber_map[subscriber_id] = (sub_obj, topic)
+        return Response(status=201, response="Subscribed to the topic {}".format(topic))
+    except Exception as e:
+        print("GET route /subscribe error: {}".format(e))
+
+
+@app.route('/unsubscribe', methods=["GET"])
+def unsubscribe():
+    try:
+        subscriber_id = int(request.args.get('subscriber_id'))
+        topic = str(request.args.get('topic'))
+        if subscriber_id in subscriber_map and subscriber_map[subscriber_id][1] == topic:
+            return Response(status=400, response="subscriber is already subscribed to the topic") 
         return Response(status=201)
     except Exception as e:
-        print("GET route error: {}".format(e))
+        print("GET route /unsubscribe error: {}".format(e))
+
+@app.route('/get_all_messages', methods=["GET"])
+def get_all_messages():
+    try:
+        subscriber_id = int(request.args.get('subscriber_id'))
+        topic = str(request.args.get('topic'))
 
 
-# @app.route('/unsubscribe', )
+        return Response(status_code=201)
+
+    except Exception as e:
+        print("GET route /get_all_messages error:".format(e))
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=8050)
