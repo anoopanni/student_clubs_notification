@@ -21,8 +21,12 @@ def home():
 @app.route('/subscribe', methods=["GET"])
 def subscribe():
     try:
-        subscriber_id = int(request.args.get('subscriber_id'))
-        topic = str(request.args.get('topic'))
+        subscriber_id = request.args.get('subscriber_id')
+        topic = request.args.get('topic')
+        if not topic or not subscriber_id:
+            return Response(status=400, response="Missing subscriber_id or topic")
+        subscriber_id = int(subscriber_id)
+        topic = str(topic)
         sub_obj = communicator.subscribe(topic)
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             return Response(status=400, response="Subscriber is already subscribed to the topic") 
