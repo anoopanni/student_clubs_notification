@@ -221,7 +221,7 @@ class ChanelQueue(Queue):
 
         while True:
             try:
-                data = self.get(block=block, timeout=timeout)
+                data = self.get(block=block, timeout=0)
                 assert isinstance(data, dict) and len(data) == 2,\
                        "Bad data in chanel queue !"
                 yield data
@@ -256,7 +256,7 @@ class ChanelPriorityQueue(PriorityQueue):
 
         while True:
             try:
-                priority_data = self.get(block=block, timeout=timeout)
+                priority_data = self.get(block=block, timeout=0)
                 assert isinstance(priority_data, tuple) and \
                        len(priority_data) == 2 and \
                        isinstance(priority_data[1], dict) and \
