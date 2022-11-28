@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, Response
+from collections import defaultdict
 from pubsub import PubSub
 import os
 
 
 app = Flask(__name__, static_url_path='/static')
 communicator = PubSub()
-subscriber_map = {}
+# {"1": {"sports":obj1, "basketball":obj2}}
+subscriber_map = defaultdict(dict)
 subscriber_id = 0
 
 @app.route('/', methods=["GET"])
@@ -22,9 +24,9 @@ def subscribe():
         subscriber_id = int(request.args.get('subscriber_id'))
         topic = str(request.args.get('topic'))
         sub_obj = communicator.subscribe(topic)
-        if subscriber_id in subscriber_map and subscriber_map[subscriber_id][1] == topic:
+        if subscriber_id in subscriber_map and topic in subscriber_map[subscriber_id]:
             return Response(status=400, response="subscriber is already subscribed to the topic") 
-        subscriber_map[subscriber_id] = (sub_obj, topic)
+        subscriber_map[subscriber_id][topic] = sub_obj
         return Response(status=201, response="Subscribed to the topic {}".format(topic))
     except Exception as e:
         print("GET route /subscribe error: {}".format(e))
