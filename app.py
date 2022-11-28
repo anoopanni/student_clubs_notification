@@ -40,6 +40,7 @@ def unsubscribe():
         topic = str(request.args.get('topic'))
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             communicator.unsubscribe(topic, subscriber_map[subscriber_id][topic])
+            del subscriber_map[subscriber_id][topic]
             return Response(status=200, response="Successfully unsubscribed from the topic: {}".format(topic))
         else:
             return Response(status=400, response="Subscriber does not exist or haven't subscribed to: {}".format(topic))
@@ -47,21 +48,21 @@ def unsubscribe():
         print("GET route /unsubscribe error: {}".format(e))
         return Response(status=400)
 
-@app.route('/get_all_messages', methods=["GET"])
-def get_all_messages():
-    try:
-        subscriber_id = int(request.args.get('subscriber_id'))
-        topic = str(request.args.get('topic'))
-        data = {}
-        if subscriber_id in subscriber_map and topic in subscriber_map[subscriber_id]:
+# @app.route('/get_all_messages', methods=["GET"])
+# def get_all_messages():
+#     try:
+#         subscriber_id = int(request.args.get('subscriber_id'))
+#         topic = str(request.args.get('topic'))
+#         data = {}
+#         if subscriber_id in subscriber_map and topic in subscriber_map[subscriber_id]:
             
-            data["result"] = 
+#             data["result"] = 
 
-        return Response(status_code=201)
+#         return Response(status_code=201)
 
-    except Exception as e:
-        print("GET route /get_all_messages error:".format(e))
-        return Response(status=400)
+#     except Exception as e:
+#         print("GET route /get_all_messages error:".format(e))
+#         return Response(status=400)
 
 
 if __name__ == "__main__":
