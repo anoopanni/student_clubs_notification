@@ -29,7 +29,7 @@ def subscribe():
         topic = str(topic)
         sub_obj = communicator.subscribe(topic)
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
-            return Response(status=400, response="Subscriber is already subscribed to the topic") 
+            return Response(status=200, response="Subscriber is already subscribed to the topic") 
         subscriber_map[subscriber_id][topic] = sub_obj
         return Response(status=200, response="Subscribed to the topic {}".format(topic))
     except Exception as e:
