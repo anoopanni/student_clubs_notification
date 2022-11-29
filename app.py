@@ -68,11 +68,33 @@ def get_all_messages():
         data = []
         if (subscriber_id in subscriber_map) and (topic in subscriber_map[subscriber_id]):
             for message in subscriber_map[subscriber_id][topic].listen():
-                data.append(message)
+                data.append(message.get("data"))
         return Response(status=200, response=json.dumps({"result":data}))
     except Exception as e:
         print("GET route /get_all_messages error: {}".format(e))
         return Response(status=400)
+
+@app.route('/publish', methods=["POST"])
+def publish():
+    try:
+        status_code = 200
+        json = request.get_json(force=True)
+        if not json:
+            status_code = 400
+            msg = "problem pasrsing the request body JSON"
+        if "topic" not in json:
+            status_code = 400
+            msg = "topic is missing in the request body JSON"
+        if "message" not in json:
+            status_code = 400
+            msg = "message is missing in the request body JSON"
+        communicator.publish(json.get("topic"), json.get("message"))
+        msg = "Successfully published message: \"{}\" under topic: {}".format(json.get("message"), json.get("topic"))
+        return Response(status=status_code, response=msg)
+    except Exception as e:
+        error = "POST route /publish error: {}".format(e)
+        print(error)
+        return Response(status=400, response=error)
 
 
 if __name__ == "__main__":
