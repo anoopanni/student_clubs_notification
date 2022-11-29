@@ -33,8 +33,9 @@ def subscribe():
         subscriber_map[subscriber_id][topic] = sub_obj
         return Response(status=200, response="Subscribed to the topic {}".format(topic))
     except Exception as e:
-        print("GET route /subscribe error: {}".format(e))
-        return Response(status=400)
+        error = "GET route /subscribe error: {}".format(e)
+        print(error)
+        return Response(status=400, response=error)
 
 
 @app.route('/unsubscribe', methods=["GET"])
@@ -53,8 +54,9 @@ def unsubscribe():
         else:
             return Response(status=400, response="Subscriber does not exist or haven't subscribed to: {}".format(topic))
     except Exception as e:
-        print("GET route /unsubscribe error: {}".format(e))
-        return Response(status=400)
+        error = "GET route /unsubscribe error: {}".format(e)
+        print(error)
+        return Response(status=400, response=error)
 
 @app.route('/get_all_messages', methods=["GET"])
 def get_all_messages():
@@ -71,8 +73,9 @@ def get_all_messages():
                 data.append(message.get("data"))
         return Response(status=200, response=json.dumps({"result":data}))
     except Exception as e:
-        print("GET route /get_all_messages error: {}".format(e))
-        return Response(status=400)
+        error = "GET route /get_all_messages error: {}".format(e)
+        print(error)
+        return Response(status=400, response=error)
 
 @app.route('/publish', methods=["POST"])
 def publish():
