@@ -5,13 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./static/style.css" />
-    <script src="./static/index.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <title>Pub/Sub</title>
   </head>
   <body>
     <script>
-    var subscribe_id = parseInt('{{subscriber_id}}');
-    // console.log(subscribe_id);
+      var subscribe_id = parseInt("{{subscriber_id}}");
     </script>
     <div class="wrap">
       <div class="left">
@@ -20,11 +24,15 @@
           <hr style="color: whitesmoke" />
         </div>
         <div class="buttonsDiv">
-          <button onclick="clickButton()" class="button button1">
+          <button id="sportsSub" class="button">
             Subscribe to Sports Club
           </button>
-          <button class="button button2">Unsubscribe Sports Club</button>
+          <button id="sportsUnSub" class="button" disabled>
+            Unsubscribe Sports Club
+          </button>
+          <button id="sportsRef" class="button" disabled>Refresh</button>
         </div>
+        <div id="sportsData"></div>
       </div>
       <div class="right">
         <div class="title">
@@ -32,10 +40,155 @@
           <hr style="color: whitesmoke" />
         </div>
         <div class="buttonsDiv">
-          <button class="button button3">Subscribe to Technical Club</button>
-          <button class="button button4">Unsubscribe Technical Club</button>
+          <button id="techSub" class="button">
+            Subscribe to Technical Club
+          </button>
+          <button id="techUnSub" class="button" disabled>
+            Unsubscribe Technical Club
+          </button>
+          <button id="techRef" class="button" disabled>Refresh</button>
         </div>
+        <div id="techData"></div>
       </div>
     </div>
   </body>
+  <script>
+    let sButton;
+    let tButton;
+    let sportsInterval;
+    let techInterval;
+    var subscribe_id = parseInt("{{subscriber_id}}");
+
+    document.getElementById("sportsSub").onclick = function (e) {
+      const ele1 = document.getElementById("sportsUnSub");
+      ele1.removeAttribute("disabled");
+      const ele2 = document.getElementById("sportsRef");
+      ele2.removeAttribute("disabled");
+      const disableSportButton = true;
+      sButton = document.getElementById("sportsSub");
+      if (disableSportButton) sButton.disabled = "disabled";
+      subscribe("sports");
+    };
+
+    document.getElementById("techSub").onclick = function (e) {
+      const ele1 = document.getElementById("techUnSub");
+      ele1.removeAttribute("disabled");
+      const ele2 = document.getElementById("techRef");
+      ele2.removeAttribute("disabled");
+      const disableTechButton = true;
+      tButton = document.getElementById("techSub");
+      if (disableTechButton) tButton.disabled = "disabled";
+      subscribe("tech");
+    };
+
+    document.getElementById("sportsUnSub").onclick = function (e) {
+      const ele = document.getElementById("sportsSub");
+      ele.removeAttribute("disabled");
+      unsubscribe("sports");
+    };
+
+    document.getElementById("techUnSub").onclick = function (e) {
+      const ele = document.getElementById("techSub");
+      ele.removeAttribute("disabled");
+      unsubscribe("tech");
+    };
+    document.getElementById("sportsRef").onclick = function (e) {
+      refreshSport("sport");
+    };
+    document.getElementById("techRef").onclick = function (e) {
+      refreshTech("tech");
+    };
+
+    function refreshSport(club) {
+      callAPISports(club);
+    }
+    function refreshTech(club) {
+      callAPITech(club);
+    }
+
+    function unsubscribe(club) {
+      axios({
+        method: "get",
+        url: `http://localhost:8050/unsubscribe?subscriber_id=${subscribe_id}&topic=${club}`,
+        responseType: "stream",
+      }).then(function (response) {
+        alert(response.data);
+      });
+      if (club === "sports") {
+        var sports = document.getElementById("sportsData");
+        sports.innerHTML = "";
+      } else if (club === "tech") {
+        var tech = document.getElementById("techData");
+        tech.innerHTML = "";
+      }
+    }
+    async function subscribe(club) {
+      axios({
+        method: "get",
+        url: `http://localhost:8050/subscribe?subscriber_id=${subscribe_id}&topic=${club}`,
+        responseType: "stream",
+      }).then(function (response) {
+        alert(response.data);
+      });
+      if (club === "sports") {
+        callAPISports(club);
+      } else if (club === "tech") {
+        callAPITech(club);
+      }
+    }
+
+    async function callAPISports(club) {
+      axios({
+        method: "get",
+        url: `http://localhost:8050/get_all_messages?subscriber_id=${subscribe_id}&topic=${club}`,
+        headers: {
+          "content-type": "application/json",
+        },
+      }).then(function (response) {
+        var sports = document.getElementById("sportsData");
+        var sportsData = response.data.result;
+
+        if (sportsData.length > 0) {
+          sports.innerHTML = "";
+          for (var i = 0; i < sportsData.length; i++) {
+            sports.innerHTML +=
+              `<div>
+                  <h4 style="color: whitesmoke;margin-left:5px;padding:5px;max-width;30%">` +
+              sportsData[i] +
+              `</h4>
+                  </div>`;
+          }
+        } else {
+          alert("No new information to be displayed");
+        }
+      });
+    }
+
+    async function callAPITech(club) {
+      axios({
+        method: "get",
+        url: `http://localhost:8050/get_all_messages?subscriber_id=${subscribe_id}&topic=${club}`,
+        headers: {
+          "content-type": "application/json",
+        },
+      }).then(function (response) {
+        var tech = document.getElementById("techData");
+        var techData = response.data.result;
+
+        if (techData.length > 0) {
+          tech.innerHTML = "";
+          for (var i = 0; i < techData.length; i++) {
+            tech.innerHTML +=
+              `<div>
+                  <h4 style="color: whitesmoke;margin-left:5px;padding:5px;max-width;30%">` +
+              techData[i] +
+              `</h4>
+                  </div>`;
+          }
+        } else {
+          alert("No new information to be displayed");
+        }
+      });
+    }
+  </script>
 </html>
