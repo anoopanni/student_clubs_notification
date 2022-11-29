@@ -52,7 +52,7 @@ def unsubscribe():
             del subscriber_map[subscriber_id][topic]
             return Response(status=200, response="Successfully unsubscribed from the topic: {}".format(topic))
         else:
-            return Response(status=400, response="Subscriber does not exist or haven't subscribed to: {}".format(topic))
+            return Response(status=200, response="Subscriber does not exist or haven't subscribed to: {}".format(topic))
     except Exception as e:
         error = "GET route /unsubscribe error: {}".format(e)
         print(error)
