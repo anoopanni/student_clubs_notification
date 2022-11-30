@@ -1,3 +1,6 @@
+body {
+  background-color: #1c1c1c;
+}
 .wrap {
   width: 100%;
   overflow: auto;
@@ -10,14 +13,12 @@
   float: left;
   width: 50%;
   background: #1c1c1c;
-  height: 100vh;
   border-right: 2px whitesmoke solid;
 }
 
 .right {
   float: right;
   background: #1c1c1c;
-  height: 100vh;
   width: 50%;
 }
 .titleText {
@@ -38,5 +39,29 @@
   display: inline-block;
   font-size: 16px;
   margin: 10px 2px;
-  border-radius: 15%;
+}
+
+#sportsUnSub:disabled {
+  background: #999;
+  color: #555;
+}
+#sportsRef:disabled {
+  background: #999;
+  color: #555;
+}
+#sportsSub:disabled {
+  background: #999;
+  color: #555;
+}
+#techUnSub:disabled {
+  background: #999;
+  color: #555;
+}
+#techSub:disabled {
+  background: #999;
+  color: #555;
+}
+#techRef:disabled {
+  background: #999;
+  color: #555;
 }
