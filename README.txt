@@ -4,7 +4,6 @@
 | | |  __/ (_| | (_| | | | | | |  __/
 |_|  \___|\__,_|\__,_|_| |_| |_|\___|
 
-# student_clubs_notification
 Student clubs notification service -- Final project for distributed systems class: COEN 317 at Santa Clara University
 
 Team members: 
