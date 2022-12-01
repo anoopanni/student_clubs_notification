@@ -32,7 +32,7 @@ d) make prune:
 
 HTTP POST request needs to be done to publish message into the running instance of the project before we could get the message on the website. 
 
-The following request headers and body needs to be present in the POST request: 
+The following request header examples and body needs to be present in the POST request: 
 
 HEADERS: 
 
