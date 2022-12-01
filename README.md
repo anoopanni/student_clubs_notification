@@ -1,8 +1,8 @@
-                          #               
-  m mm   mmm    mmm    mmm#  mmmmm   mmm  
-  #"  " #"  #  "   #  #" "#  # # #  #"  # 
-  #     #""""  m"""#  #   #  # # #  #"""" 
-  #     "#mm"  "mm"#  "#m##  # # #  "#mm" 
+                    _                
+ _ __ ___  __ _  __| |_ __ ___   ___ 
+| '__/ _ \/ _` |/ _` | '_ ` _ \ / _ \
+| | |  __/ (_| | (_| | | | | | |  __/
+|_|  \___|\__,_|\__,_|_| |_| |_|\___|
 
 # student_clubs_notification
 Student clubs notification service -- Final project for distributed systems class: COEN 317 at Santa Clara University
@@ -33,20 +33,20 @@ d) make prune:
 
 TO PUBLISH MESSAGE:
 
-HTTP POST request needs to be done to publish message into the running instance of the project before we could get the message on the website. 
+  HTTP POST request needs to be done to publish message into the running instance of the project before we could get the message on the website. 
 
-The following request header examples and body needs to be present in the POST request: 
+  The following request header examples and body needs to be present in the POST request: 
 
-HEADERS: 
+  HEADERS: 
 
-Content-Type: application/json
+  Content-Type: application/json
 
-BODY:
+  BODY:
 
-{"message":"hello world",
- "topic":"sports"}
+  {"message":"hello world",
+  "topic":"sports"}
 
 
- RESPONSE MESSAGE:
+  RESPONSE MESSAGE:
 
- Successfully published message: "hello world" under topic: sports
+  Successfully published message: "hello world" under topic: sports
