@@ -23,10 +23,6 @@ class PubSubBase():
     """
     PubSubBase should not be used,
     Please use classes PubSub and PubSubPriority
-    The algorithms for thread safe functionnalities were designed
-    by Zhen Wang : congratulation to him !
-    This class is based on thread-safe FIFO queue Python
-    implementation and was designed thread-safe by Zhen Wang.
     """
 
     def __init__(self, max_queue_in_a_channel=100, max_id_4_a_channel=2**31):
