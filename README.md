@@ -8,9 +8,9 @@
 Student clubs notification service as part of final project for distributed systems class: COEN 317
 
 Team members: 
-Anoop Shivayogi
-Eshaan Rathi
-Tampara Venkata Santosh Anish Dora
+Anoop Shivayogi (W1648523)
+Eshaan Rathi (W1648452)
+Tampara Venkata Santosh Anish Dora (W1641666)
 
 
 step 1. Install Docker Desktop Client
