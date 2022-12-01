@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "c5bc2aff-a298-46fe-9deb-b4cfd59a57e9",
+		"name": "Distributed Systems",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24664110"
+	},
+	"item": [
+		{
+			"name": "Publish POST sports",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\":\"hello world\",\n \"topic\":\"sports\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8050/publish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_all_messages GET sports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8050/get_all_messages?subscriber_id=1&topic=sports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"get_all_messages"
+					],
+					"query": [
+						{
+							"key": "subscriber_id",
+							"value": "1"
+						},
+						{
+							"key": "topic",
+							"value": "sports"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscribe GET sports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8050/subscribe?subscriber_id=123&topic=sports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"subscribe"
+					],
+					"query": [
+						{
+							"key": "subscriber_id",
+							"value": "123"
+						},
+						{
+							"key": "topic",
+							"value": "sports"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsubscribe GET sports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8050/unsubscribe?subscriber_id=123&topic=sports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"unsubscribe"
+					],
+					"query": [
+						{
+							"key": "subscriber_id",
+							"value": "123"
+						},
+						{
+							"key": "topic",
+							"value": "sports"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish POST tech",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\":\"hello world 20\",\n \"topic\":\"tech\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8050/publish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"publish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscribe GET tech",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8050/subscribe?subscriber_id=1&topic=tech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"subscribe"
+					],
+					"query": [
+						{
+							"key": "subscriber_id",
+							"value": "1"
+						},
+						{
+							"key": "topic",
+							"value": "tech"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsubscribe GET tech",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8050/unsubscribe?subscriber_id=2&topic=tech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"unsubscribe"
+					],
+					"query": [
+						{
+							"key": "subscriber_id",
+							"value": "2"
+						},
+						{
+							"key": "topic",
+							"value": "tech"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_all_messages GET tech",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8050/get_all_messages?subscriber_id=1&topic=tech",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8050",
+					"path": [
+						"get_all_messages"
+					],
+					"query": [
+						{
+							"key": "subscriber_id",
+							"value": "1"
+						},
+						{
+							"key": "topic",
+							"value": "tech"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
