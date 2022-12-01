@@ -6,13 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
     image: flask_local
-    # Start block for local development
-    #command: python app.py
-    #command: "/bin/bash"
-    # working_dir: /app
-    # volumes:
-    #   - ./:/app
-    # End block for local development
     ports:
       - 8050:8050
     environment:
