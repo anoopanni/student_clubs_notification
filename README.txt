@@ -57,3 +57,8 @@ Division of work:
 Anoop Shivayogi (W1648523): Back end, report
 Tampara Venkata Santosh Anish Dora (W1641666): User interface, PPT, report
 Eshaan Rathi (W1648452): User interface, PPT, report
+
+
+Github Repository:
+
+https://github.com/anoopanni/student_clubs_notification
